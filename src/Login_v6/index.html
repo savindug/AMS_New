@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>SB Admin</title>
+
+	<script>window.$ = window.jQuery = require('./vendor/jquery/jquery-3.2.1.min.js');</script>
+
+	<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+		<div class="demo-wrapper html5-progress-bar">
+				<div class="progress-bar-wrapper">
+					<progress id="progressbar" value="0" max="100"></progress>
+					<span class="progress-value">0%</span>
+				</div>
+		</div>
+
+		<script>
+				window.addEventListener('load', () => {
+					$(() => {
+					{
+						let progressbar = $('#progressbar');
+						let max = progressbar.attr('max');
+						let time = (1000 / max) * 5;
+						let value = progressbar.val();
+
+						const loading = () => {
+							value += 1;
+							progressbar.val(value);
+
+							$('.progress-value').html(value + '%');
+
+							if (value == max) {
+								clearInterval(animate);
+								this.redirect()
+							}
+						};
+
+						const animate = setInterval(() => loading(), time);
+					};
+				});
+				})
+
+
+			function isEmpty(obj) {
+						for(var key in obj) {
+							if(obj.hasOwnProperty(key))
+								return false;
+						}
+						return true;
+					}
+
+
+			redirect = () => {
+				let usr_data = JSON.parse(localStorage.getItem('usr_data'))
+
+			console.log(usr_data)
+
+
+			if(isEmpty(usr_data)){
+				window.location = __dirname+"/signup.html"
+			}else if(!isEmpty(usr_data)){
+				window.location = __dirname+"/signin.html"
+			}
+
+			}
+
+			</script>
+</body>
+
+</html>
