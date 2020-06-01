@@ -4,6 +4,14 @@ import 'datatables.net-dt';
 import 'datatables.net';
 import '../../node_modules/datatables.net-dt/css/jquery.dataTables.css'
 import 'moment';
+import {
+    Button,
+    Modal,
+    ModalHeader,
+    ModalBody,
+    ModalFooter,
+    Table,
+} from "reactstrap";
 
 import { DateRangePicker, DateRange } from "@matharumanpreet00/react-daterange-picker";
 
@@ -24,7 +32,10 @@ class AttComponent extends Component {
 		dateRange: {
             startDate: 'Fri Nov 01 2019 00:00:00 GMT+0530 (India Standard Time)',
             endDate: 'Sun Dec 01 2019 00:00:00 GMT+0530 (India Standard Time)'
-        }
+        },
+        modal : false
+
+
     };
 
 
@@ -99,26 +110,44 @@ class AttComponent extends Component {
 
     }
 
+    toggle = () =>{
+        this.setState({modal:!(this.state.modal)});
+
+    }
 
     render() {
 
         return (
             <div>
                 <p>Attendance Table Here</p>
-                <button id="selectDuration" className="btn btn-primary" type="button">toggle</button>
+                <button id="selectDuration" className="btn btn-primary" type="button" onClick={this.toggle}>Toggle</button>
                 <div className="row">
+
                         <div className="col-2"></div>
                             <div className="col-8">
+
                                 <div id='dateRangePicker'>
-                                    <DateRangePicker
-                                        open={this.state.open}
-                                        onChange={range => this.setState({ dateRange: range })}
-                                        autoFocus
-                                    />
+
+                                    <Modal size="lg" isOpen={this.state.modal} toggle={this.toggle}>
+                                        <ModalHeader toggle={this.toggle}>Select Date Range</ModalHeader>
+
+                                            <ModalBody>
+                                                <DateRangePicker
+                                                    open={this.state.open}
+                                                    onChange={(range) => { this.setState({ dateRange: range, modal: !(this.state.modal) }); this.getEmployees(); }}
+                                                    autoFocus
+                                                />
+                                            </ModalBody>
+
+                                    </Modal>
+
                                 </div>
+
                         <div className="col-2"></div>
                     </div>
+
                 </div>
+                <br/>
                 <table id="attendance" className="display"></table>
                 <button className="btn btn-warning"><b>Print Report</b></button>
             </div>

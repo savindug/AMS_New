@@ -26,7 +26,6 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
     "datatables.net-dt": "^1.10.21",
-    "electron": "^9.0.0",
     "electron-is-dev": "^1.2.0",
     "moment": "^2.26.0",
     "react": "^16.13.1",
@@ -57,6 +56,8 @@
     ]
   },
   "devDependencies": {
-    "electron-builder": "^22.6.1"
+    "electron": "^9.0.0",
+    "electron-builder": "^22.6.1",
+    "reactstrap": "^8.4.1"
   }
 }
