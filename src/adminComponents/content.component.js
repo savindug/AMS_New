@@ -10,6 +10,10 @@ import FreportComponent from "./freport.component";
 import InstructionsComponent from "./instructions.component";
 import EmployeesComponent from "./employees.component";
 
+/*-------------ADMIN------------------------------------------------*/
+/*-------------ADMIN------------------------------------------------*/
+/*-------------ADMIN------------------------------------------------*/
+/*-------------ADMIN------------------------------------------------*/
 export default class Content extends Component {
 
     render() {
@@ -28,13 +32,13 @@ export default class Content extends Component {
 
                 <div className="container">
 
-                    <nav className="navbar navbar-expand-lg navbar-light bg-light ">
+                    <nav className="navbar navbar-expand-lg navbar-dark bg-dark ">
                         <span className="btn btn-info">{today}</span>
 
                         <div className="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                             <ul className="navbar-nav d-flex ">
                                 <li className="nav-item">
-                                    <Link to={'/'}  className="nav-link">Main Menu</Link>
+                                    <Link to={'/'}  className="nav-link">Admin Menu</Link>
                                 </li>
                                 <li className="nav-item">
                                     <Link to={'/index'}  className="nav-link">Index</Link>
