@@ -3,7 +3,7 @@ import $ from 'jquery';
 import 'datatables.net-dt';
 import 'datatables.net';
 import '../../node_modules/datatables.net-dt/css/jquery.dataTables.css'
-import 'moment';
+import moment from 'moment';
 import {
     Button,
     Modal,
@@ -30,17 +30,18 @@ class AttComponent extends Component {
         date_picker_toggle: false,
 		open: true,
 		dateRange: {
-            startDate: 'Fri Nov 01 2019 00:00:00 GMT+0530 (India Standard Time)',
-            endDate: 'Sun Dec 01 2019 00:00:00 GMT+0530 (India Standard Time)'
+            // startDate: moment().startOf('week').toDate(),
+            // endDate: moment().endOf('week').toDate(),
+            startDate: 'Fri Oct 01 2019 00:00:00 GMT+0530 (India Standard Time)',
+            endDate: 'Sun Dec 31 2019 00:00:00 GMT+0530 (India Standard Time)'
         },
         modal : false
 
 
     };
 
-
-
     componentDidMount(){
+
 
         let dateRangerPicker = document.querySelector('#dateRangePicker')
         dateRangerPicker.style.display = 'none';
@@ -53,19 +54,23 @@ class AttComponent extends Component {
                 dateRangerPicker.style.display = "none";
               }
         });
-        this.getEmployees();
+        this.getAttendance(this.state.dateRange);
     }
 
      convertDate = (dateString) => {
         var date = new Date(dateString);
+        console.log(Number(date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear())
         return ( Number(date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear());
     }
 
-    getEmployees = () => {
+    getAttendance = (selectedDateRange) => {
+
+
 
         const xhr = new XMLHttpRequest();
+        //let url = new URL('http://localhost:8656/AMS/RESTful_Service/getAllAttendance');
 
-        let url = new URL(`http://localhost:8656/AMS/RESTful_Service/getAttendanceByDuration?from=${this.convertDate(this.state.dateRange.startDate)}&to=${this.convertDate(this.state.dateRange.endDate)}`);
+        let url = new URL(`http://localhost:8656/AMS/RESTful_Service/getAttendanceByDuration?from=${this.convertDate(selectedDateRange.startDate)}&to=${this.convertDate(selectedDateRange.endDate)}`);
         xhr.open('GET', url, true);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.send();
@@ -89,6 +94,12 @@ class AttComponent extends Component {
     }
 
     displayUsers = (data) => {
+
+
+    if ($.fn.DataTable.isDataTable("#attendance")) {
+        $('#attendance').DataTable().clear().destroy();
+      }
+
         console.log("Users => "+data)
 
         var data = JSON.parse(data);
@@ -98,6 +109,7 @@ class AttComponent extends Component {
           $(document).ready(function() {
             $('#attendance').DataTable( {
                 data: data,
+                "retrieve": true,
                 columns: [
                     { title: 'Employee ID', data: 'uId' },
                     { title: 'Username', data: 'uName' },
@@ -134,7 +146,8 @@ class AttComponent extends Component {
                                             <ModalBody>
                                                 <DateRangePicker
                                                     open={this.state.open}
-                                                    onChange={(range) => { this.setState({ dateRange: range, modal: !(this.state.modal) }); this.getEmployees(); }}
+                                                    maxDate={moment()}
+                                                    onChange={(range) => { this.setState({ dateRange: range, modal: !(this.state.modal) }); this.getAttendance(range); console.log(range) }}
                                                     autoFocus
                                                 />
                                             </ModalBody>
