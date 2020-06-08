@@ -66,9 +66,9 @@ class LeaveComponent extends Component {
 
 
         const xhr = new XMLHttpRequest();
-        let url = new URL('http://localhost:8656/AMS/RESTful_Service/getAllLeaves');
+        //let url = new URL('http://localhost:8656/AMS/RESTful_Service/getAllLeaves');
 
-        //let url = new URL(`http://localhost:8656/AMS/RESTful_Service/getAttendanceByDuration?from=${this.convertDate(selectedDateRange.startDate)}&to=${this.convertDate(selectedDateRange.endDate)}`);
+        let url = new URL(`http://localhost:8656/AMS/RESTful_Service/getLeavesByDuration?from=${this.convertDate(selectedDateRange.startDate)}&to=${this.convertDate(selectedDateRange.endDate)}`);
         xhr.open('GET', url, true);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.send();
