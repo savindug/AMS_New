@@ -65,7 +65,7 @@ class EmployeesComponent extends Component {
 
         return (
             <div>
-                <p>Emp Table Here</p>
+
                 <div className="text-center">
                 <table id="employees" className="display"></table>
                 <button className="btn btn-warning"><b>Print Report</b></button>

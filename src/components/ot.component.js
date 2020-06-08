@@ -133,7 +133,7 @@ class OtComponent extends Component {
 
         return (
             <div>
-                <p>Attendance Table Here</p>
+
                 <button id="selectDuration" className="btn btn-primary" type="button" onClick={this.toggle}>Toggle</button>
                 <div className="row">
 
