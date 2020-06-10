@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Link, Switch} from 'react-router-dom';
 
-import Edit from "./edit.component";
-import Index from "./index.component";
+
 import AttComponent from "./att.component";
 import OtComponent from "./ot.component";
 import LeaveComponent from "./leave.component";
@@ -10,10 +9,6 @@ import FreportComponent from "./freport.component";
 import InstructionsComponent from "./instructions.component";
 import EmployeesComponent from "./employees.component";
 
-/*-------------ADMIN------------------------------------------------*/
-/*-------------ADMIN------------------------------------------------*/
-/*-------------ADMIN------------------------------------------------*/
-/*-------------ADMIN------------------------------------------------*/
 export default class Content extends Component {
 
     render() {
@@ -32,16 +27,13 @@ export default class Content extends Component {
 
                 <div className="container">
 
-                    <nav className="navbar navbar-expand-lg navbar-dark bg-dark ">
+                    <nav className="navbar navbar-expand-lg navbar-dark bg-secondary ">
                         <span className="btn btn-info">{today}</span>
 
                         <div className="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                             <ul className="navbar-nav d-flex ">
                                 <li className="nav-item">
                                     <Link to={'/'}  className="nav-link">Admin Menu</Link>
-                                </li>
-                                <li className="nav-item">
-                                    <Link to={'/index'}  className="nav-link">Index</Link>
                                 </li>
                                 <li className="nav-item">
                                     <Link to={'/emp'}  className="nav-link">Employees</Link>
@@ -68,8 +60,7 @@ export default class Content extends Component {
 
                     <Switch>
 
-                        <Route exact path ='/edit/:id' component={Edit}/>
-                        <Route exact path ='/index' component={Index}/>
+
                         <Route exact path ='/emp' component={EmployeesComponent}/>
                         <Route exact path ='/att' component={AttComponent}/>
                         <Route exact path ='/leaves' component={LeaveComponent}/>

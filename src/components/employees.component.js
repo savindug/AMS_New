@@ -89,7 +89,7 @@ class EmployeesComponent extends Component {
         return (
 
             <div>
-                <p>Emp Table Here</p>
+
                 <div className="text-center">
                 <table id="employees" className="display"></table>
                 <button id='btn-export' className="btn btn-warning" onClick={this.exportToExcel}><b>Print Report</b></button>

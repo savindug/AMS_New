@@ -131,6 +131,7 @@ class AttComponent extends Component {
 
         return (
             <div>
+<<<<<<< HEAD
                 <h3 className="text-center text-bold">Attendance Management</h3>
 
                 <div className="container row">
@@ -152,6 +153,10 @@ class AttComponent extends Component {
                         <div className="col-4 mt-5"></div>
                 </div>
 
+=======
+
+                <button id="selectDuration" className="btn btn-primary" type="button" onClick={this.toggle}>Toggle</button>
+>>>>>>> master
                 <div className="row">
 
                         <div className="col-2"></div>
