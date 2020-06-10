@@ -4,6 +4,7 @@ import 'datatables.net-dt';
 import 'datatables.net';
 import '../../node_modules/datatables.net-dt/css/jquery.dataTables.css'
 import moment from 'moment';
+import BranchDropdown from "./dropdown";
 import {
     Button,
     Modal,
@@ -14,6 +15,7 @@ import {
 } from "reactstrap";
 
 import { DateRangePicker, DateRange } from "@matharumanpreet00/react-daterange-picker";
+import TableRow from "./TableRow";
 
 $('#attendance').DataTable();
 
@@ -32,10 +34,11 @@ class AttComponent extends Component {
 		dateRange: {
             // startDate: moment().startOf('week').toDate(),
             // endDate: moment().endOf('week').toDate(),
-            startDate: 'Fri Oct 01 2019 00:00:00 GMT+0530 (India Standard Time)',
-            endDate: 'Sun Dec 31 2019 00:00:00 GMT+0530 (India Standard Time)'
+            startDate: 'Fri May 01 2017 00:00:00 GMT+0530 (India Standard Time)',
+            endDate: 'Sun Oct 01 2018 00:00:00 GMT+0530 (India Standard Time)',
         },
-        modal : false
+        modal : false,
+        branch: "NoBranch"
 
 
     };
@@ -65,7 +68,7 @@ class AttComponent extends Component {
 
     getAttendance = (selectedDateRange) => {
 
-
+        console.log(this.state.branch);
 
         const xhr = new XMLHttpRequest();
         //let url = new URL('http://localhost:8656/AMS/RESTful_Service/getAllAttendance');
@@ -127,12 +130,46 @@ class AttComponent extends Component {
 
     }
 
+    handleBranchChange= (branch) => {
+        this.setState({
+            branch:branch.target.value
+        });
+
+
+    };
+
     render() {
 
         return (
             <div>
+                <h3 className="text-center text-bold">Attendance Management</h3>
+                <br/>
+                <div className="text-center">
+                    <BranchDropdown branch={this.state.branch} handleBranchChange={this.handleBranchChange}/>
+                </div>
+                <div className="container row text-center">
 
-                <button id="selectDuration" className="btn btn-primary" type="button" onClick={this.toggle}>Toggle</button>
+                    <div className="col-4 my-5"></div>
+
+                    <div className="col-4 my-5">
+                        <div className="input-group input-group-sm mb-3">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text" id=""><i className="fa fa-calendar"
+                                                                            aria-hidden="true"></i></span>
+                            </div>
+                            <input id="selectDuration" type="text" onClick={this.toggle}
+                                   value={moment(this.state.dateRange.startDate).format('MM/DD/YYYY') + " - " + moment(this.state.dateRange.endDate).format('MM/DD/YYYY')}
+                                   className="form-control text-center shadow-none" aria-label="Small"
+                                   readOnly="readonly" aria-describedby="inputGroup-sizing-sm"/>
+                            <div className="input-group-prepend">
+                                <span className="input-group-text" id=""><i className="fa fa-calendar"
+                                                                            aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="col-4 my-5"></div>
+                </div>
                 <div className="row">
 
                         <div className="col-2"></div>

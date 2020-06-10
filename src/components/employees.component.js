@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import $ from 'jquery';
 import 'datatables.net-dt';
 import '../../node_modules/datatables.net-dt/css/jquery.dataTables.css'
-const { ipcRenderer } = window.require('electron');
+/*const { ipcRenderer } = window.require('electron');*/
 
 $('#employees').DataTable();
 
-ipcRenderer.on('selected-path', function (event, path) {
+/*ipcRenderer.on('selected-path', function (event, path) {
     console.log('Full path: ', path);
-});
+});*/
 
 class EmployeesComponent extends Component {
 
@@ -78,9 +78,9 @@ class EmployeesComponent extends Component {
         this.getEmployees();
     }
 
-    exportToExcel = () =>{
+   /* exportToExcel = () =>{
         ipcRenderer.send('open-file-dialog-for-file')
-    }
+    }*/
 
 
 
@@ -89,7 +89,7 @@ class EmployeesComponent extends Component {
         return (
 
             <div>
-
+                <h3 className="text-center text-bold">Employee Management</h3>
                 <div className="text-center">
                 <table id="employees" className="display"></table>
                 <button id='btn-export' className="btn btn-warning" onClick={this.exportToExcel}><b>Print Report</b></button>

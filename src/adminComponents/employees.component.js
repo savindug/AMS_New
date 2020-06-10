@@ -3,10 +3,23 @@ import $ from 'jquery';
 import 'datatables.net-dt';
 import '../../node_modules/datatables.net-dt/css/jquery.dataTables.css'
 import 'datatables.net'
+import BranchDropdown from "./dropdown";
 
 $('#employees').DataTable();
 
 class EmployeesComponent extends Component {
+
+    constructor(props) {
+        super(props);
+
+    }
+
+    state = {
+
+        branch: "NoBranch"
+
+
+    };
 
    getEmployees = () => {
 
@@ -61,11 +74,23 @@ class EmployeesComponent extends Component {
         this.getEmployees();
     }
 
+
+    handleBranchChange= (branch) => {
+        this.setState({
+            branch: branch.target.value
+        });
+        this.getEmployees();  /*special for emp*/
+    }
+
     render() {
 
         return (
             <div>
-
+                <h3 className="text-center text-bold">Employee Management</h3>
+                <br/>
+                <div className="text-center">
+                <BranchDropdown branch={this.state.branch} handleBranchChange={this.handleBranchChange}/>
+                </div>
                 <div className="text-center">
                 <table id="employees" className="display"></table>
                 <button className="btn btn-warning"><b>Print Report</b></button>
