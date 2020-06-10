@@ -1,6 +1,7 @@
 const electron = require('electron')
 const {ipcMain, session} = require('electron')
 const {webContents} = require('electron')
+const { dialog } = require('electron')
 const app = electron.app
 const path = require('path')
 const isDev = require('electron-is-dev')
@@ -50,6 +51,7 @@ function createWindow() {
     height: 600,
     webPreferences: {
       nodeIntegration: true,
+       preload: __dirname + '/preload.js'
     },
     show: false
   })
@@ -96,6 +98,22 @@ ipcMain.on('set-username', (event, data) => {
   event.sender.send('user-saved')
   })
 })
+
+ipcMain.on('open-file-dialog-for-file', function (event) {
+  dialog.showOpenDialog(mainWindow, {
+    properties: ['openFile', 'openDirectory']
+  }).then(result => {
+
+    console.log(result.canceled)
+    console.log(result.filePaths)
+
+    mainWindow.webContents.send('selected-path', result.filePaths[0])
+
+  }).catch(err => {
+    console.log(err)
+  })
+
+ });
 
 ipcMain.on('loginWindow-load', (e, data) => {
 

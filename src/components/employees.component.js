@@ -2,9 +2,13 @@ import React, {Component} from 'react';
 import $ from 'jquery';
 import 'datatables.net-dt';
 import '../../node_modules/datatables.net-dt/css/jquery.dataTables.css'
-import 'datatables.net'
+const { ipcRenderer } = window.require('electron');
 
 $('#employees').DataTable();
+
+ipcRenderer.on('selected-path', function (event, path) {
+    console.log('Full path: ', path);
+});
 
 class EmployeesComponent extends Component {
 
@@ -44,6 +48,19 @@ class EmployeesComponent extends Component {
 
           $(document).ready(function() {
             $('#employees').DataTable( {
+                dom: 'Bfrtip',
+                buttons: [
+                     {
+                          extend: 'excel',
+                          text: 'Save current page',
+                          fileName:  "data.xlsx",
+                          exportOptions: {
+                          modifier: {
+                                  page: 'current'
+                                      }
+                            }
+                         }
+                    ],
                 data: data,
                 columns: [
                     { title: 'Employee ID', data: 'uID' },
@@ -61,17 +78,26 @@ class EmployeesComponent extends Component {
         this.getEmployees();
     }
 
+    exportToExcel = () =>{
+        ipcRenderer.send('open-file-dialog-for-file')
+    }
+
+
+
     render() {
 
         return (
+
             <div>
                 <p>Emp Table Here</p>
                 <div className="text-center">
                 <table id="employees" className="display"></table>
-                <button className="btn btn-warning"><b>Print Report</b></button>
+                <button id='btn-export' className="btn btn-warning" onClick={this.exportToExcel}><b>Print Report</b></button>
                 </div>
             </div>
         );
+
+
     }
 }
 

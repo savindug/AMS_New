@@ -129,8 +129,27 @@ class LeaveComponent extends Component {
 
         return (
             <div>
-                <p>Attendance Table Here</p>
-                <button id="selectDuration" className="btn btn-primary" type="button" onClick={this.toggle}>Toggle</button>
+                <h3 className="text-center text-bold">Leave Management</h3>
+
+                    <div className="container row">
+
+                        <div className="col-4 my-5"></div>
+
+                            <div className="col-4 my-5">
+                                <div className="input-group input-group-sm mb-3">
+                                    <div className="input-group-prepend">
+                                            <span className="input-group-text" id=""><i className="fa fa-calendar" aria-hidden="true"></i></span>
+                                    </div>
+                                        <input id="selectDuration" type="text" onClick={this.toggle} value={moment(this.state.dateRange.startDate).format('MM/DD/YYYY') + " - " + moment(this.state.dateRange.endDate).format('MM/DD/YYYY')} className="form-control text-center shadow-none" aria-label="Small" readonly="readonly" aria-describedby="inputGroup-sizing-sm" />
+                                    <div className="input-group-prepend">
+                                            <span className="input-group-text" id=""><i className="fa fa-calendar" aria-hidden="true"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-4 my-5"></div>
+                    </div>
+
                 <div className="row">
 
                         <div className="col-2"></div>

@@ -19,8 +19,6 @@ const electron = require('electron');
 
         saveUser(){
 
-            let url = new URL('http://localhost:8090/api/v1/users');
-
             var data = {
                 "username": this.username,
                 "email": this.email,
