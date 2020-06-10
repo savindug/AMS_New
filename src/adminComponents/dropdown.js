@@ -42,7 +42,7 @@ class BranchDropdown extends React.Component {
                         <option value="Thawalama">Thawalama</option>
                         <option value="Urala_Wanduramba">Urala_Wanduramba</option>
                         <option value="Urugasmanhandiya">Urugasmanhandiya</option>
-                        <option value="Walahanduwaa">Walahanduwa</option>
+                        <option value="Walahanduwa">Walahanduwa</option>
                         <option value="Wanduramba">Wanduramba</option>
                         <option value="Weragoda">Weragoda</option>
                         <option value="Yakkalamulla">Yakkalamulla</option>

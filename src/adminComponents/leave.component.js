@@ -37,7 +37,6 @@ class LeaveComponent extends Component {
         modal : false,
         branch: "NoBranch"
 
-
     };
 
     componentDidMount(){
@@ -68,9 +67,9 @@ class LeaveComponent extends Component {
 
 
         const xhr = new XMLHttpRequest();
-        let url = new URL('http://localhost:8656/AMS/RESTful_Service/getAllLeaves');
+        //let url = new URL('http://localhost:8656/AMS/RESTful_Service/getAllLeaves');
 
-        //let url = new URL(`http://localhost:8656/AMS/RESTful_Service/getAttendanceByDuration?from=${this.convertDate(selectedDateRange.startDate)}&to=${this.convertDate(selectedDateRange.endDate)}`);
+        let url = new URL(`http://localhost:8656/AMS/RESTful_Service/getLeavesByDurationAdmin?from=${this.convertDate(selectedDateRange.startDate)}&to=${this.convertDate(selectedDateRange.endDate)}&branchname=${this.state.branch}`);
         xhr.open('GET', url, true);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.send();
@@ -139,34 +138,35 @@ class LeaveComponent extends Component {
 
         return (
             <div>
+
                 <h3 className="text-center text-bold">Leave Management</h3>
                 <br/>
                 <div className="text-center">
                     <BranchDropdown branch={this.state.branch} handleBranchChange={this.handleBranchChange}/>
                 </div>
-                <div className="container row text-center">
+                    <div className="container row">
 
-                    <div className="col-4 my-5"></div>
+                        <div className="col-4 my-5"></div>
 
-                    <div className="col-4 my-5">
-                        <div className="input-group input-group-sm mb-3">
-                            <div className="input-group-prepend">
-                                <span className="input-group-text" id=""><i className="fa fa-calendar"
-                                                                            aria-hidden="true"></i></span>
+                            <div className="col-4 my-5">
+                                <div className="input-group input-group-sm mb-3">
+                                    <div className="input-group-prepend">
+                                            <span className="input-group-text" id=""><i className="fa fa-calendar" aria-hidden="true"></i></span>
+                                    </div>
+                                        <input id="selectDuration" type="text" onClick={this.toggle} value={moment(this.state.dateRange.startDate).format('MM/DD/YYYY') + " - " + moment(this.state.dateRange.endDate).format('MM/DD/YYYY')} className="form-control text-center shadow-none" aria-label="Small" readonly="readonly" aria-describedby="inputGroup-sizing-sm" />
+                                    <div className="input-group-prepend">
+                                            <span className="input-group-text" id=""><i className="fa fa-calendar" aria-hidden="true"></i></span>
+                                    </div>
+                                </div>
                             </div>
-                            <input id="selectDuration" type="text" onClick={this.toggle}
-                                   value={moment(this.state.dateRange.startDate).format('MM/DD/YYYY') + " - " + moment(this.state.dateRange.endDate).format('MM/DD/YYYY')}
-                                   className="form-control text-center shadow-none" aria-label="Small"
-                                   readOnly="readonly" aria-describedby="inputGroup-sizing-sm"/>
-                            <div className="input-group-prepend">
-                                <span className="input-group-text" id=""><i className="fa fa-calendar"
-                                                                            aria-hidden="true"></i></span>
-                            </div>
-                        </div>
+
+                            <div className="col-4 my-5"></div>
                     </div>
 
-                    <div className="col-4 my-5"></div>
-                </div>
+
+
+                <button id="selectDuration" className="btn btn-primary" type="button" onClick={this.toggle}>Toggle</button>
+
                 <div className="row">
 
                         <div className="col-2"></div>

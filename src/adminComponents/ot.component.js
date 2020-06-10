@@ -19,15 +19,17 @@ import BranchDropdown from "./dropdown";
 $('#attendance').DataTable();
 
 class OtComponent extends Component {
+
+
     constructor(props) {
         super(props);
         this.btn_Date_picker = React.createRef();
-    }
+      }
 
     state = {
         date_picker_toggle: false,
-        open: true,
-        dateRange: {
+		open: true,
+		dateRange: {
             // startDate: moment().startOf('week').toDate(),
             // endDate: moment().endOf('week').toDate(),
             startDate: 'Fri Oct 01 2019 00:00:00 GMT+0530 (India Standard Time)',
@@ -49,15 +51,15 @@ class OtComponent extends Component {
             console.log('btn clicked')
             if (dateRangerPicker.style.display === "none") {
                 dateRangerPicker.style.display = "block";
-            } else {
+              } else {
                 dateRangerPicker.style.display = "none";
-            }
+              }
         });
         this.getAttendance(this.state.dateRange);
 
     }
 
-    convertDate = (dateString) => {
+     convertDate = (dateString) => {
         var date = new Date(dateString);
         console.log(Number(date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear())
         return ( Number(date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear());
@@ -70,7 +72,7 @@ class OtComponent extends Component {
         const xhr = new XMLHttpRequest();
         //let url = new URL('http://localhost:8656/AMS/RESTful_Service/getAllLeaves');
 
-        let url = new URL(`http://localhost:8656/AMS/RESTful_Service/getOTByDuration?from=${this.convertDate(selectedDateRange.startDate)}&to=${this.convertDate(selectedDateRange.endDate)}`);
+        let url = new URL(`http://localhost:8656/AMS/RESTful_Service/getOTByDurationAdmin?from=${this.convertDate(selectedDateRange.startDate)}&to=${this.convertDate(selectedDateRange.endDate)}&branchname=${this.state.branch}`);
         xhr.open('GET', url, true);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.send();
@@ -78,17 +80,17 @@ class OtComponent extends Component {
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4) { //has the operation finished
                 if (xhr.status === 200) { //was it successful
-                    //result.value = xhr.responseText; //update the webpage
-                    var ret = JSON.parse(xhr.responseText);
+                //result.value = xhr.responseText; //update the webpage
+                var ret = JSON.parse(xhr.responseText);
 
-                    console.log(ret);
+                console.log(ret);
                     this.displayUsers(xhr.responseText)
                 }else {
 
-                    alert("Async call failed. ResponseText was:\n" + xhr.responseText);
+                alert("Async call failed. ResponseText was:\n" + xhr.responseText);
                 } //show what the failed response was
-                // xhr = null; //the previous xhr object no longer has any use
-            }
+               // xhr = null; //the previous xhr object no longer has any use
+                }
         }
 
     }
@@ -96,17 +98,17 @@ class OtComponent extends Component {
     displayUsers = (data) => {
 
 
-        if ($.fn.DataTable.isDataTable("#tbl_OT")) {
-            $('#tbl_OT').DataTable().clear().destroy();
-        }
+    if ($.fn.DataTable.isDataTable("#tbl_OT")) {
+        $('#tbl_OT').DataTable().clear().destroy();
+      }
 
         console.log("Users => "+data)
 
         var data = JSON.parse(data);
 
-        console.log("dataset: "+data)
+    console.log("dataset: "+data)
 
-        $(document).ready(function() {
+          $(document).ready(function() {
             $('#tbl_OT').DataTable( {
                 fixedHeader: true,
                 data: data,
@@ -120,7 +122,7 @@ class OtComponent extends Component {
                     { title: 'Clock Out', data: 'clockOut' },
                     { title: 'OT hours', data: 'otHrs' },
                     { title: 'Date', data: 'date' }
-                ]
+                    ]
             } );
 
         } );
@@ -140,7 +142,6 @@ class OtComponent extends Component {
 
     };
 
-
     render() {
 
         return (
@@ -149,53 +150,53 @@ class OtComponent extends Component {
                 <h3 className="text-center text-bold">Over Time & Late Covering Management</h3>
                 <br/>
                 <div className="text-center">
-                <BranchDropdown branch={this.state.branch} handleBranchChange={this.handleBranchChange} />
+                    <BranchDropdown branch={this.state.branch} handleBranchChange={this.handleBranchChange}/>
                 </div>
-                <div className="container row text-center">
+                    <div className="container row">
 
-                    <div className="col-4 my-5"></div>
+                        <div className="col-4 my-5"></div>
 
-                    <div className="col-4 my-5">
-                        <div className="input-group input-group-sm mb-3">
-                            <div className="input-group-prepend">
-                                <span className="input-group-text" id=""><i className="fa fa-calendar" aria-hidden="true"></i></span>
+                            <div className="col-4 my-5">
+                                <div className="input-group input-group-sm mb-3">
+                                    <div className="input-group-prepend">
+                                            <span className="input-group-text" id=""><i className="fa fa-calendar" aria-hidden="true"></i></span>
+                                    </div>
+                                        <input id="selectDuration" type="text" onClick={this.toggle} value={moment(this.state.dateRange.startDate).format('MM/DD/YYYY') + " - " + moment(this.state.dateRange.endDate).format('MM/DD/YYYY')} className="form-control text-center shadow-none" aria-label="Small" readonly="readonly" aria-describedby="inputGroup-sizing-sm" />
+                                    <div className="input-group-prepend">
+                                            <span className="input-group-text" id=""><i className="fa fa-calendar" aria-hidden="true"></i></span>
+                                    </div>
+                                </div>
                             </div>
-                            <input id="selectDuration" type="text" onClick={this.toggle} value={moment(this.state.dateRange.startDate).format('MM/DD/YYYY') + " - " + moment(this.state.dateRange.endDate).format('MM/DD/YYYY')} className="form-control text-center shadow-none" aria-label="Small" readonly="readonly" aria-describedby="inputGroup-sizing-sm" />
-                            <div className="input-group-prepend">
-                                <span className="input-group-text" id=""><i className="fa fa-calendar" aria-hidden="true"></i></span>
-                            </div>
-                        </div>
+
+                            <div className="col-4 my-5"></div>
                     </div>
 
-                    <div className="col-4 my-5"></div>
-                </div>
 
 
-
-
+                <button id="selectDuration" className="btn btn-primary" type="button" onClick={this.toggle}>Toggle</button>
 
                 <div className="row">
 
-                    <div className="col-2"></div>
-                    <div className="col-8">
+                        <div className="col-2"></div>
+                            <div className="col-8">
 
-                        <div id='dateRangePicker'>
+                                <div id='dateRangePicker'>
 
-                            <Modal size="lg" isOpen={this.state.modal} toggle={this.toggle}>
-                                <ModalHeader toggle={this.toggle}>Select Date Range</ModalHeader>
+                                    <Modal size="lg" isOpen={this.state.modal} toggle={this.toggle}>
+                                        <ModalHeader toggle={this.toggle}>Select Date Range</ModalHeader>
 
-                                <ModalBody>
-                                    <DateRangePicker
-                                        open={this.state.open}
-                                        maxDate={moment().subtract(1, 'days')}
-                                        onChange={(range) => { this.setState({ dateRange: range, modal: !(this.state.modal) }); this.getAttendance(range); console.log(range) }}
-                                        autoFocus
-                                    />
-                                </ModalBody>
+                                            <ModalBody>
+                                                <DateRangePicker
+                                                    open={this.state.open}
+                                                    maxDate={moment().subtract(1, 'days')}
+                                                    onChange={(range) => { this.setState({ dateRange: range, modal: !(this.state.modal) }); this.getAttendance(range); console.log(range) }}
+                                                    autoFocus
+                                                />
+                                            </ModalBody>
 
-                            </Modal>
+                                    </Modal>
 
-                        </div>
+                                </div>
 
                         <div className="col-2"></div>
                     </div>

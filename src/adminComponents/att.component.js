@@ -4,7 +4,6 @@ import 'datatables.net-dt';
 import 'datatables.net';
 import '../../node_modules/datatables.net-dt/css/jquery.dataTables.css'
 import moment from 'moment';
-import BranchDropdown from "./dropdown";
 import {
     Button,
     Modal,
@@ -15,7 +14,7 @@ import {
 } from "reactstrap";
 
 import { DateRangePicker, DateRange } from "@matharumanpreet00/react-daterange-picker";
-import TableRow from "./TableRow";
+import BranchDropdown from "./dropdown";
 
 $('#attendance').DataTable();
 
@@ -34,8 +33,8 @@ class AttComponent extends Component {
 		dateRange: {
             // startDate: moment().startOf('week').toDate(),
             // endDate: moment().endOf('week').toDate(),
-            startDate: 'Fri May 01 2017 00:00:00 GMT+0530 (India Standard Time)',
-            endDate: 'Sun Oct 01 2018 00:00:00 GMT+0530 (India Standard Time)',
+            startDate: 'Fri Oct 01 2019 00:00:00 GMT+0530 (India Standard Time)',
+            endDate: 'Sun Dec 31 2019 00:00:00 GMT+0530 (India Standard Time)'
         },
         modal : false,
         branch: "NoBranch"
@@ -68,12 +67,12 @@ class AttComponent extends Component {
 
     getAttendance = (selectedDateRange) => {
 
-        console.log(this.state.branch);
+
 
         const xhr = new XMLHttpRequest();
         //let url = new URL('http://localhost:8656/AMS/RESTful_Service/getAllAttendance');
 
-        let url = new URL(`http://localhost:8656/AMS/RESTful_Service/getAttendanceByDuration?from=${this.convertDate(selectedDateRange.startDate)}&to=${this.convertDate(selectedDateRange.endDate)}`);
+        let url = new URL(`http://localhost:8656/AMS/RESTful_Service/getAttendanceByDurationAdmin?from=${this.convertDate(selectedDateRange.startDate)}&to=${this.convertDate(selectedDateRange.endDate)}&branchname=${this.state.branch}`);
         xhr.open('GET', url, true);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.send();
@@ -142,6 +141,7 @@ class AttComponent extends Component {
 
         return (
             <div>
+
                 <h3 className="text-center text-bold">Attendance Management</h3>
                 <br/>
                 <div className="text-center">
@@ -170,6 +170,7 @@ class AttComponent extends Component {
 
                     <div className="col-4 my-5"></div>
                 </div>
+
                 <div className="row">
 
                         <div className="col-2"></div>
