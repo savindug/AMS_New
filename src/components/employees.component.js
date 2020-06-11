@@ -1,14 +1,44 @@
 import React, {Component} from 'react';
 import $ from 'jquery';
 import 'datatables.net-dt';
+import axios from "axios";
 import '../../node_modules/datatables.net-dt/css/jquery.dataTables.css'
 const { ipcRenderer } = window.require('electron');
-
+$.DataTable = require('datatables.net');
 $('#employees').DataTable();
 
-ipcRenderer.on('selected-path', function (event, path) {
+
+
+ipcRenderer.on('selected-path-emp', function (event, path) {
     console.log('Full path: ', path);
+
+    path = path.replace(/\\/g, ",");
+
+    console.log('replaced path: '+path);
+    const xhr = new XMLHttpRequest();
+
+          let url = new URL(`http://localhost:8656/AMS/RESTful_Service/exportEmployees/${path}`);
+
+          axios
+          .get(
+            `http://localhost:8656/AMS/RESTful_Service/exportEmployees/${path}`
+          )
+          .then((response) => {
+              console.log(response.data);
+
+              if(response.data != null){
+                ipcRenderer.send('open-msg-box', "Employees Table Exported Successfully \nLocation: "+response.data)
+                document.querySelector("#btn-export").disabled = false;
+              }
+
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+
 });
+
+
 
 class EmployeesComponent extends Component {
 
@@ -48,19 +78,6 @@ class EmployeesComponent extends Component {
 
           $(document).ready(function() {
             $('#employees').DataTable( {
-                dom: 'Bfrtip',
-                buttons: [
-                     {
-                          extend: 'excel',
-                          text: 'Save current page',
-                          fileName:  "data.xlsx",
-                          exportOptions: {
-                          modifier: {
-                                  page: 'current'
-                                      }
-                            }
-                         }
-                    ],
                 data: data,
                 columns: [
                     { title: 'Employee ID', data: 'uID' },
@@ -76,13 +93,13 @@ class EmployeesComponent extends Component {
 
     componentDidMount(){
         this.getEmployees();
+
     }
 
     exportToExcel = () =>{
-        ipcRenderer.send('open-file-dialog-for-file')
+        ipcRenderer.send('open-file-dialog-for-file', 1)
+        document.querySelector("#btn-export").disabled = true;
     }
-
-
 
     render() {
 
@@ -90,9 +107,12 @@ class EmployeesComponent extends Component {
 
             <div>
 
-                <div className="text-center">
-                <table id="employees" className="display"></table>
-                <button id='btn-export' className="btn btn-warning" onClick={this.exportToExcel}><b>Print Report</b></button>
+                    <h3 className="text-center text-bold">Employee Management</h3>
+
+
+                <div className="text-center my-5">
+                    <table id="employees" className="display"></table>
+                    <button id='btn-export' className="btn btn-primary my-5" onClick={this.exportToExcel}><b>Export Report</b></button>
                 </div>
             </div>
         );

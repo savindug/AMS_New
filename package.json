@@ -25,17 +25,20 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
+    "datatables.net-buttons": "^1.6.2",
     "datatables.net-dt": "^1.10.21",
     "electron-is-dev": "^1.2.0",
     "font-awesome": "^4.7.0",
     "jszip": "^3.4.0",
+    "jzip": "^1.0.0",
     "moment": "^2.26.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-dropzone": "^11.0.1",
     "react-html-table-to-excel": "^2.0.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "xlsx": "^0.16.2"
   },
   "scripts": {
     "electron": "electron .",

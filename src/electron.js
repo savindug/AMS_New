@@ -30,6 +30,7 @@ function createLogin() {
 
   loginWindow = new BrowserWindow({
     width: 500, height: 750,
+    icon: __dirname + '/app-ico.png',
     webPreferences: {  nodeIntegration: true }
   })
 
@@ -50,8 +51,7 @@ function createWindow() {
     width: 800,
     height: 600,
     webPreferences: {
-      nodeIntegration: true,
-       preload: __dirname + '/preload.js'
+      nodeIntegration: true
     },
     show: false
   })
@@ -99,15 +99,30 @@ ipcMain.on('set-username', (event, data) => {
   })
 })
 
-ipcMain.on('open-file-dialog-for-file', function (event) {
+ipcMain.on('open-file-dialog-for-file', function (event, tbl) {
+
+  console.log(tbl)
+
   dialog.showOpenDialog(mainWindow, {
+    title: 'Export Wizard',
     properties: ['openFile', 'openDirectory']
   }).then(result => {
+
 
     console.log(result.canceled)
     console.log(result.filePaths)
 
-    mainWindow.webContents.send('selected-path', result.filePaths[0])
+    if(tbl == 1){
+      mainWindow.webContents.send('selected-path-emp', result.filePaths[0])
+    }else if(tbl == 2){
+      mainWindow.webContents.send('selected-path-att', result.filePaths[0])
+    }else if(tbl == 3){
+      mainWindow.webContents.send('selected-path-lv', result.filePaths[0])
+    }else if(tbl == 4){
+      mainWindow.webContents.send('selected-path-ot', result.filePaths[0])
+    }
+
+
 
   }).catch(err => {
     console.log(err)
@@ -118,4 +133,12 @@ ipcMain.on('open-file-dialog-for-file', function (event) {
 ipcMain.on('loginWindow-load', (e, data) => {
 
 
+})
+
+ipcMain.on('open-msg-box' , (e, data) => {
+  const response = dialog.showMessageBox(null, {
+    type: 'info',
+    title: "Attendance Management Application",
+    message: data
+  });
 })

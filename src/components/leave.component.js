@@ -4,6 +4,7 @@ import 'datatables.net-dt';
 import 'datatables.net';
 import '../../node_modules/datatables.net-dt/css/jquery.dataTables.css'
 import moment from 'moment';
+import axios from "axios";
 import {
     Button,
     Modal,
@@ -15,7 +16,45 @@ import {
 
 import { DateRangePicker, DateRange } from "@matharumanpreet00/react-daterange-picker";
 
+const { ipcRenderer } = window.require('electron');
+
 $('#tbl_leaves').DataTable();
+
+ipcRenderer.on('selected-path-lv', function (event, path) {
+    console.log('Full path: ', path);
+
+    path = path.replace(/\\/g, ",");
+
+    var selectedDuration = document.querySelector('#selectDuration').value;
+    var duration = selectedDuration.split('-');
+
+    var from = duration[0].trim();
+    var to = duration[1].trim();
+    var att = 'att';
+
+    console.log("from: "+from+to);
+    console.log("to: "+to);
+
+    console.log('replaced path: '+path);
+
+          axios
+          .get(
+            `http://localhost:8656/AMS/RESTful_Service/exportLv/${path}?from=${from}&to=${to}`
+          )
+          .then((response) => {
+              console.log(response.data);
+
+              if(response.data != null){
+                ipcRenderer.send('open-msg-box', "Attendance Table Exported Successfully \nLocation: "+response.data)
+                document.querySelector("#btn-export").disabled = false;
+              }
+
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+
+});
 
 class LeaveComponent extends Component {
 
@@ -125,11 +164,15 @@ class LeaveComponent extends Component {
 
     }
 
+    exportToExcel = () =>{
+        ipcRenderer.send('open-file-dialog-for-file', 3)
+        document.querySelector("#btn-export").disabled = true;
+    }
+
     render() {
 
         return (
             <div>
-<<<<<<< HEAD
                 <h3 className="text-center text-bold">Leave Management</h3>
 
                     <div className="container row">
@@ -151,10 +194,6 @@ class LeaveComponent extends Component {
                             <div className="col-4 my-5"></div>
                     </div>
 
-=======
-
-                <button id="selectDuration" className="btn btn-primary" type="button" onClick={this.toggle}>Toggle</button>
->>>>>>> master
                 <div className="row">
 
                         <div className="col-2"></div>
@@ -184,7 +223,9 @@ class LeaveComponent extends Component {
                 </div>
                 <br/>
                 <table id="tbl_leaves" className="display"></table>
-                <button className="btn btn-warning"><b>Print Report</b></button>
+
+                <button id='btn-export' className="btn btn-primary my-5" onClick={this.exportToExcel}><b>Export Report</b></button>
+
             </div>
         );
     }

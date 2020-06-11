@@ -16,9 +16,6 @@ export default class App extends Component {
         return(
            <div>
                {this.state.adminAccount ? <AdminContent/> : <Content/>}
-
-
-
            </div>
         );
     }
