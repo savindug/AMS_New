@@ -8,7 +8,7 @@ import AdminContent from "./adminComponents/content.component";
 export default class App extends Component {
 
     state ={
-        adminAccount:false
+        adminAccount:true
     }
 
     render() {

@@ -2,17 +2,33 @@ import React, {Component} from 'react';
 import $ from 'jquery';
 import 'datatables.net-dt';
 import '../../node_modules/datatables.net-dt/css/jquery.dataTables.css'
-import 'datatables.net'
-
+/*const { ipcRenderer } = window.require('electron');*/
+import BranchDropdown from "./dropdown";
 $('#employees').DataTable();
+
+/*ipcRenderer.on('selected-path', function (event, path) {
+    console.log('Full path: ', path);
+});*/
 
 class EmployeesComponent extends Component {
 
-   getEmployees = () => {
+    constructor(props) {
+        super(props);
+
+    }
+
+    state = {
+
+        branch: "NoBranch"
+
+
+    };
+
+   getEmployees = (branch) => {
 
         const xhr = new XMLHttpRequest();
 
-        let url = new URL('http://localhost:8656/AMS/RESTful_Service/getEmployees');
+       let url = new URL(`http://localhost:8656/AMS/RESTful_Service/getEmployeesAdmin?branchname=${branch}`);
         xhr.open('GET', url, true);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.send();
@@ -36,7 +52,11 @@ class EmployeesComponent extends Component {
     }
 
     displayUsers = (data) => {
-        console.log("Users => "+data)
+        if ($.fn.DataTable.isDataTable("#employees")) {
+            $('#employees').DataTable().clear().destroy();
+        }
+
+       console.log("Users => "+data)
 
         var data = JSON.parse(data);
 
@@ -44,6 +64,19 @@ class EmployeesComponent extends Component {
 
           $(document).ready(function() {
             $('#employees').DataTable( {
+                dom: 'Bfrtip',
+                buttons: [
+                     {
+                          extend: 'excel',
+                          text: 'Save current page',
+                          fileName:  "data.xlsx",
+                          exportOptions: {
+                          modifier: {
+                                  page: 'current'
+                                      }
+                            }
+                         }
+                    ],
                 data: data,
                 columns: [
                     { title: 'Employee ID', data: 'uID' },
@@ -61,17 +94,36 @@ class EmployeesComponent extends Component {
         this.getEmployees();
     }
 
+   /* exportToExcel = () =>{
+        ipcRenderer.send('open-file-dialog-for-file')
+    }*/
+
+    handleBranchChange= (branch) => {
+        this.setState({
+            branch: branch.target.value
+        });
+        this.getEmployees(branch.target.value);  /*special for emp*/
+    }
+
+
     render() {
 
         return (
-            <div>
 
+            <div>
+                <h3 className="text-center text-bold">Employee Management</h3>
+                <br/>
+                <div className="text-center">
+                    <BranchDropdown branch={this.state.branch} handleBranchChange={this.handleBranchChange}/>
+                </div>
                 <div className="text-center">
                 <table id="employees" className="display"></table>
-                <button className="btn btn-warning"><b>Print Report</b></button>
+                <button id='btn-export' className="btn btn-warning" onClick={this.exportToExcel}><b>Print Report</b></button>
                 </div>
             </div>
         );
+
+
     }
 }
 

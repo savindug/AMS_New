@@ -197,6 +197,13 @@ class AttComponent extends Component {
                         <div className="col-4 mt-5"></div>
                 </div>
 
+<<<<<<< HEAD
+=======
+
+
+                <button id="selectDuration" className="btn btn-primary" type="button" onClick={this.toggle}>Toggle</button>
+
+>>>>>>> master
                 <div className="row">
 
                         <div className="col-2"></div>

@@ -3,6 +3,7 @@ import $ from 'jquery';
 import 'datatables.net-dt';
 import axios from "axios";
 import '../../node_modules/datatables.net-dt/css/jquery.dataTables.css'
+<<<<<<< HEAD
 const { ipcRenderer } = window.require('electron');
 $.DataTable = require('datatables.net');
 $('#employees').DataTable();
@@ -37,6 +38,15 @@ ipcRenderer.on('selected-path-emp', function (event, path) {
           });
 
 });
+=======
+/*const { ipcRenderer } = window.require('electron');*/
+
+$('#employees').DataTable();
+
+/*ipcRenderer.on('selected-path', function (event, path) {
+    console.log('Full path: ', path);
+});*/
+>>>>>>> master
 
 
 
@@ -96,16 +106,23 @@ class EmployeesComponent extends Component {
 
     }
 
+<<<<<<< HEAD
     exportToExcel = () =>{
         ipcRenderer.send('open-file-dialog-for-file', 1)
         document.querySelector("#btn-export").disabled = true;
     }
+=======
+   /* exportToExcel = () =>{
+        ipcRenderer.send('open-file-dialog-for-file')
+    }*/
+>>>>>>> master
 
     render() {
 
         return (
 
             <div>
+<<<<<<< HEAD
 
                     <h3 className="text-center text-bold">Employee Management</h3>
 
@@ -113,6 +130,12 @@ class EmployeesComponent extends Component {
                 <div className="text-center my-5">
                     <table id="employees" className="display"></table>
                     <button id='btn-export' className="btn btn-primary my-5" onClick={this.exportToExcel}><b>Export Report</b></button>
+=======
+                <h3 className="text-center text-bold">Employee Management</h3>
+                <div className="text-center">
+                <table id="employees" className="display"></table>
+                <button id='btn-export' className="btn btn-warning" onClick={this.exportToExcel}><b>Print Report</b></button>
+>>>>>>> master
                 </div>
             </div>
         );
