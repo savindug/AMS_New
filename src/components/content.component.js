@@ -27,7 +27,7 @@ export default class Content extends Component {
 
                 <div className="container">
 
-                    <nav className="navbar navbar-expand-lg navbar-light navbar-fixed bg-light ">
+                    <nav className="navbar navbar-expand-lg navbar-light navbar-fixed bg-light sticky-top">
                         <span className="btn btn-info">{today}</span>
 
                         <div className="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">

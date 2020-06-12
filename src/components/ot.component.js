@@ -232,7 +232,10 @@ class OtComponent extends Component {
                 <br/>
                 <table id="tbl_OT" className="display"></table>
 
+
+                <div className="text-center my-5">
                 <button id='btn-export' className="btn btn-primary my-5" onClick={this.exportToExcel}><b>Export Report</b></button>
+                </div>
 
             </div>
         );

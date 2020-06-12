@@ -4,25 +4,79 @@ import 'datatables.net-dt';
 import '../../node_modules/datatables.net-dt/css/jquery.dataTables.css'
 /*const { ipcRenderer } = window.require('electron');*/
 import BranchDropdown from "./dropdown";
+import axios from "axios";
+
+const { ipcRenderer } = window.require('electron');
+$.DataTable = require('datatables.net');
 $('#employees').DataTable();
 
-/*ipcRenderer.on('selected-path', function (event, path) {
+
+
+
+
+ipcRenderer.on('selected-path-emp', function (event, path) {
     console.log('Full path: ', path);
-});*/
+
+    path = path.replace(/\\/g, ",");
+
+    console.log('replaced path: '+path);
+    const xhr = new XMLHttpRequest();
+
+
+    let branch = document.querySelector("#branch-inpt").value;
+
+
+    axios
+        .get(
+            `http://localhost:8656/AMS/RESTful_Service/AdminexportEmployees/${path}?branchname=${branch}`
+        )
+        .then((response) => {
+            console.log(response.data);
+
+            if(response.data != null){
+                ipcRenderer.send('open-msg-box', "Employees Table Exported Successfully \nLocation: "+response.data)
+                document.querySelector("#btn-export").disabled = false;
+            }
+
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+
+});
+
+
+
+
+
 
 class EmployeesComponent extends Component {
 
-    constructor(props) {
-        super(props);
 
-    }
+
+
 
     state = {
 
-        branch: "NoBranch"
+        branch: "NoBranch",
+
 
 
     };
+
+    exportToExcel = () =>{
+
+        ipcRenderer.send('open-file-dialog-for-file', 1)
+        document.querySelector("#btn-export").disabled = true;
+
+
+
+    }
+
+
+
+
+
 
    getEmployees = (branch) => {
 
@@ -105,6 +159,13 @@ class EmployeesComponent extends Component {
         this.getEmployees(branch.target.value);  /*special for emp*/
     }
 
+    exportToExcelPrint= () => {
+        this.exportToExcel();
+
+
+
+    }
+
 
     render() {
 
@@ -115,10 +176,13 @@ class EmployeesComponent extends Component {
                 <br/>
                 <div className="text-center">
                     <BranchDropdown branch={this.state.branch} handleBranchChange={this.handleBranchChange}/>
+                    <input id="branch-inpt" value={this.state.branch} hidden/>
                 </div>
                 <div className="text-center">
                 <table id="employees" className="display"></table>
-                <button id='btn-export' className="btn btn-warning" onClick={this.exportToExcel}><b>Print Report</b></button>
+                <div className="text-center my-5">
+                    <button id='btn-export' className="btn btn-primary my-5"  onClick={this.exportToExcelPrint}><b>Export Report</b></button>
+                </div>
                 </div>
             </div>
         );

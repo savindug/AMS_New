@@ -13,6 +13,7 @@ class BranchDropdown extends React.Component {
                 <label>
                     Select Branch : {" "}
                     <select value={branch} onChange={handleBranchChange}>
+                        <option value="Choose">Choose</option>
                         <option value="Ahangama">Ahangama</option>
                         <option value="Ahungalla">Ahungalla</option>
                         <option value="Aluthwala">Aluthwala</option>
