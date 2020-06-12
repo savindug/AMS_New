@@ -21,7 +21,7 @@ const { ipcRenderer } = window.require('electron');
 $('#tbl_leaves').DataTable();
 
 
-ipcRenderer.on('selected-path-lv', function (event, path) {
+ipcRenderer.on('selected-path-lv-Admin', function (event, path) {
     console.log('Full path: ', path);
 
     path = path.replace(/\\/g, ",");
@@ -61,7 +61,7 @@ ipcRenderer.on('selected-path-lv', function (event, path) {
 class LeaveComponent extends Component {
 
     exportToExcel = () =>{
-        ipcRenderer.send('open-file-dialog-for-file', 3)
+        ipcRenderer.send('open-file-dialog-for-file', 7)
         document.querySelector("#btn-export").disabled = true;
 
 

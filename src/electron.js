@@ -121,6 +121,15 @@ ipcMain.on('open-file-dialog-for-file', function (event, tbl) {
     }else if(tbl == 4){
       mainWindow.webContents.send('selected-path-ot', result.filePaths[0])
     }
+  else if(tbl == 5){
+    mainWindow.webContents.send('selected-path-emp-Admin', result.filePaths[0])
+  }else if(tbl == 6){
+    mainWindow.webContents.send('selected-path-att-Admin', result.filePaths[0])
+  }else if(tbl == 7){
+    mainWindow.webContents.send('selected-path-lv-Admin', result.filePaths[0])
+    }else if(tbl == 8){
+      mainWindow.webContents.send('selected-path-ot-Admin', result.filePaths[0])
+    }
 
 
 
@@ -129,6 +138,8 @@ ipcMain.on('open-file-dialog-for-file', function (event, tbl) {
   })
 
  });
+
+
 
 ipcMain.on('loginWindow-load', (e, data) => {
 

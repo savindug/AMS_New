@@ -22,7 +22,7 @@ const { ipcRenderer } = window.require('electron');
 
 $('#attendance').DataTable();
 
-ipcRenderer.on('selected-path-att', function (event, path) {
+ipcRenderer.on('selected-path-att-Admin', function (event, path) {
     console.log('Full path: ', path);
 
     path = path.replace(/\\/g, ",");
@@ -63,7 +63,7 @@ class AttComponent extends Component {
 
 
     exportToExcel = () =>{
-        ipcRenderer.send('open-file-dialog-for-file', 2)
+        ipcRenderer.send('open-file-dialog-for-file', 6)
         document.querySelector("#btn-export").disabled = true;
 
 

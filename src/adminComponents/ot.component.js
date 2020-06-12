@@ -21,7 +21,7 @@ const { ipcRenderer } = window.require('electron');
 $('#attendance').DataTable();
 
 
-ipcRenderer.on('selected-path-ot', function (event, path) {
+ipcRenderer.on('selected-path-ot-Admin', function (event, path) {
     console.log('Full path: ', path);
 
     path = path.replace(/\\/g, ",");
@@ -60,7 +60,7 @@ ipcRenderer.on('selected-path-ot', function (event, path) {
 class OtComponent extends Component {
 
     exportToExcel = (branch) =>{
-        ipcRenderer.send('open-file-dialog-for-file', 4)
+        ipcRenderer.send('open-file-dialog-for-file', 8)
         document.querySelector("#btn-export").disabled = true;
 
 

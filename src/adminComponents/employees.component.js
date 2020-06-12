@@ -14,7 +14,7 @@ $('#employees').DataTable();
 
 
 
-ipcRenderer.on('selected-path-emp', function (event, path) {
+ipcRenderer.on('selected-path-emp-Admin', function (event, path) {
     console.log('Full path: ', path);
 
     path = path.replace(/\\/g, ",");
@@ -66,7 +66,7 @@ class EmployeesComponent extends Component {
 
     exportToExcel = () =>{
 
-        ipcRenderer.send('open-file-dialog-for-file', 1)
+        ipcRenderer.send('open-file-dialog-for-file', 5)
         document.querySelector("#btn-export").disabled = true;
 
 
