@@ -8,14 +8,14 @@ import AdminContent from "./adminComponents/content.component";
 export default class App extends Component {
 
     state ={
-        adminAccount:true
+        branch:""
     }
 
     render() {
 
         return(
            <div>
-               {this.state.adminAccount ? <AdminContent/> : <Content/>}
+               {this.state.branch === "District_Office_Galle" || this.state.branch === "Head_Office"  ? <AdminContent/> : <Content/>}
            </div>
         );
     }
