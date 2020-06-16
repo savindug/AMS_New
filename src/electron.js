@@ -29,12 +29,14 @@ function run_AMS_Service(){
 function createLogin() {
 
   loginWindow = new BrowserWindow({
-    width: 500, height: 750,
-    icon: __dirname + '/app-ico.png',
+    width: 900, height: 600,
+    icon: __dirname + './ams-app-icon.png',
+    title: 'Attendance Management Application',
     webPreferences: {  nodeIntegration: true }
   })
 
-  loginWindow.loadFile(__dirname+'/Login_v6/index.html');
+  loginWindow.loadFile( __dirname + './userComponents/signin.html');
+  loginWindow.setResizable(true)
 
   loginWindow.webContents.on('did-finish-load', function() {
     loginWindow.show();

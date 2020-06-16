@@ -8,7 +8,11 @@ import AdminContent from "./adminComponents/content.component";
 export default class App extends Component {
 
     state ={
+<<<<<<< Updated upstream
         branch:""
+=======
+        adminAccount:false
+>>>>>>> Stashed changes
     }
 
     render() {
