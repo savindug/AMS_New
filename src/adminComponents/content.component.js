@@ -8,6 +8,7 @@ import LeaveComponent from "./leave.component";
 import FreportComponent from "./freport.component";
 import InstructionsComponent from "./instructions.component";
 import EmployeesComponent from "./employees.component";
+import MainMenu from "./menu.component";
 
 export default class Content extends Component {
 
@@ -60,7 +61,7 @@ export default class Content extends Component {
 
                     <Switch>
 
-
+                        <Route exact path ='/' component={MainMenu}/>
                         <Route exact path ='/emp' component={EmployeesComponent}/>
                         <Route exact path ='/att' component={AttComponent}/>
                         <Route exact path ='/leaves' component={LeaveComponent}/>

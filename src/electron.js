@@ -46,7 +46,7 @@ function createLogin() {
 
 }
 
-function createWindow() {
+function createWindow(data) {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
@@ -54,6 +54,7 @@ function createWindow() {
       nodeIntegration: true
     },
     show: false
+
   })
 
   run_AMS_Service();
@@ -64,9 +65,18 @@ function createWindow() {
       : `file://${path.join(__dirname, '../build/index.html')}`,
   )
 
+  mainWindow.webContents.on('did-finish-load', function() {
+    mainWindow.webContents.send('sus', data)
+    console.log("user: "+ JSON.stringify(data) );
+  });
+
+
   mainWindow.on('closed', () => {
     mainWindow = null
   })
+
+
+
             mainWindow.webContents.on('dom-ready', function() {
                 loginWindow.show = false
                 loginWindow.close()
@@ -94,6 +104,7 @@ app.on('activate', () => {
 
 ipcMain.on('set-username', (event, data) => {
   this.user = data
+  console.log(this.user);
   createWindow(data, () => {
   event.sender.send('user-saved')
   })

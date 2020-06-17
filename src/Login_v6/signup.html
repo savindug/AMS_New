@@ -43,7 +43,48 @@
         <div class="form-group">
 			<div class="input-group">
 				<span class="input-group-addon"><i class="fa fa-paper-plane"></i></span>
-				<input id="email" type="email" class="form-control" name="email" placeholder="Email Address" required="required">
+				<label>
+					Select Branch
+					<select id="email" name="email">
+						<option value="Choose">Choose</option>
+						<option value="Head_Office">Head_Office</option>
+						<option value="District_Office_Galle">District_Office_Galle</option>
+						<option value="Ahangama">Ahangama</option>
+						<option value="Ahungalla">Ahungalla</option>
+						<option value="Aluthwala">Aluthwala</option>
+						<option value="Ambalangoda">Ambalangoda</option>
+						<option value="Ambana">Ambana</option>
+						<option value="Baddegama">Baddegama</option>
+						<option value="Batapola">Batapola</option>
+						<option value="Elpitiya">Elpitiya</option>
+						<option value="Ethkandura">Ethkandura</option>
+						<option value="Gonadeniya_Udugama">Gonadeniya_Udugama</option>
+						<option value="Gongala_Gonagalapura">Gongala_Gonagalapura</option>
+						<option value="Karandeniya">Karandeniya</option>
+						<option value="Keradewala">Keradewala</option>
+						<option value="Kodagoda_Imaduwa">Kodagoda_Imaduwa</option>
+						<option value="Koggala">Koggala</option>
+						<option value="Labuduwa">Labuduwa</option>
+						<option value="Nagoda_Ethumale">Nagoda_Ethumale</option>
+						<option value="Neluwa">Neluwa</option>
+						<option value="Niyagama">Niyagama</option>
+						<option value="Opatha">Opatha</option>
+						<option value="Pahalagamhaya_Miriswaththa_Benthota">Pahalagamhaya_Miriswaththa_Benthota</option>
+						<option value="Paragoda_Imaduwa">Paragoda_Imaduwa</option>
+						<option value="Pilana">Pilana</option>
+						<option value="Pinkanda">Pinkanda</option>
+						<option value="Pitigala">Pitigala</option>
+						<option value="Rathgama">Rathgama</option>
+						<option value="Thawalama">Thawalama</option>
+						<option value="Urala_Wanduramba">Urala_Wanduramba</option>
+						<option value="Urugasmanhandiya">Urugasmanhandiya</option>
+						<option value="Walahanduwa">Walahanduwa</option>
+						<option value="Wanduramba">Wanduramba</option>
+						<option value="Weragoda">Weragoda</option>
+						<option value="Yakkalamulla">Yakkalamulla</option>
+
+					</select>
+				</label>
 			</div>
         </div>
 		<div class="form-group">
@@ -149,15 +190,7 @@
 
     function validateEmail (email)  {
 
-        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-        var ret = re.test(String(this.email).toLowerCase());
-
-        if ( /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email) ){
-                return true
-            }else {
-                return false
-            }
+        return true;
     }
 
     function confirmPwd (pwd, c_pwd)  {
