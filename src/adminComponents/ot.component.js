@@ -223,7 +223,7 @@ class OtComponent extends Component {
 
 
 
-                <button id="selectDuration" className="btn btn-primary" type="button" onClick={this.toggle}>Toggle</button>
+                
 
                 <div className="row">
 
