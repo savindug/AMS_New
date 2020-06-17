@@ -223,7 +223,7 @@ class OtComponent extends Component {
 
 
 
-                
+
 
                 <div className="row">
 
