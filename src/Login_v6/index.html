@@ -2,7 +2,7 @@
 <html>
 
 <head>
-	<title>SB Admin</title>
+	<title>Attendance Management Application</title>
 
 	<script>window.$ = window.jQuery = require('./vendor/jquery/jquery-3.2.1.min.js');</script>
 	<script src="../../node_modules/axios/dist/axios.min.js"></script>
@@ -27,16 +27,13 @@
 					let uploadStatus = 1;
 					let usr_acc = JSON.parse(localStorage.getItem('usr_data'))
 
-
-				    if(this.usr_acc != null && this.user_acc != null){
-						console.log(usr_acc.email)
-						uploadToServer(`http://localhost:8656/AMS/RESTful_Service/uploadEmployees?branchname=${usr_acc.email}`)
-						uploadToServer(`http://localhost:8656/AMS/RESTful_Service/uploadAttendance?branchname=${usr_acc.email}`)
-						uploadToServer(`http://localhost:8656/AMS/RESTful_Service/uploadLeaves?branchname=${usr_acc.email}`)
-						uploadToServer(`http://localhost:8656/AMS/RESTful_Service/uploadOT?branchname=${usr_acc.email}`)
-					}else{
-
+					if(usr_acc != null){
+					uploadToServer(`http://localhost:8656/AMS/RESTful_Service/uploadEmployees?branchname=${usr_acc.email}`)
+					uploadToServer(`http://localhost:8656/AMS/RESTful_Service/uploadAttendance?branchname=${usr_acc.email}`)
+					uploadToServer(`http://localhost:8656/AMS/RESTful_Service/uploadLeaves?branchname=${usr_acc.email}`)
+					uploadToServer(`http://localhost:8656/AMS/RESTful_Service/uploadOT?branchname=${usr_acc.email}`)
 					}
+
 
 					axios
 						.get(
@@ -58,20 +55,12 @@
 					{
 						let progressbar = $('#progressbar');
 						let max = progressbar.attr('max');
-						let time = (1000 / max) * 5;
+						let time = (1000 / max) * 8;
 						let value = progressbar.val();
 
 						const loading = () => {
 
-							if(this.ams_service == true && this.uploadStatus == 1){
-								value = 50;
-							}
-
-							if(this.uploadStatus == 1){
-								value = 100
-							}
-
-
+							value += 1
 							progressbar.val(value);
 
 							$('.progress-value').html(value + '%');
