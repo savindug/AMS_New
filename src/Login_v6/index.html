@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>SB Admin</title>
+
+	<script>window.$ = window.jQuery = require('./vendor/jquery/jquery-3.2.1.min.js');</script>
+	<script src="../../node_modules/axios/dist/axios.min.js"></script>
+
+	<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+		<div class="demo-wrapper html5-progress-bar">
+				<div class="progress-bar-wrapper">
+					<progress id="progressbar" value="0" max="100"></progress>
+					<span class="progress-value">0%</span>
+				</div>
+		</div>
+
+		<script>
+
+				window.addEventListener('load', () => {
+
+					let ams_service = false;
+					let uploadStatus = 1;
+					let usr_acc = JSON.parse(localStorage.getItem('usr_data'))
+
+
+				    if(this.usr_acc != null && this.user_acc != null){
+						console.log(usr_acc.email)
+						uploadToServer(`http://localhost:8656/AMS/RESTful_Service/uploadEmployees?branchname=${usr_acc.email}`)
+						uploadToServer(`http://localhost:8656/AMS/RESTful_Service/uploadAttendance?branchname=${usr_acc.email}`)
+						uploadToServer(`http://localhost:8656/AMS/RESTful_Service/uploadLeaves?branchname=${usr_acc.email}`)
+						uploadToServer(`http://localhost:8656/AMS/RESTful_Service/uploadOT?branchname=${usr_acc.email}`)
+					}else{
+
+					}
+
+					axios
+						.get(
+							`http://localhost:8656/AMS/RESTful_Service/serverStatus`
+						)
+						.then((response) => {
+							console.log(response.data);
+
+							if(response.data == 1){
+								this.ams_service = true;
+							}
+
+						})
+						.catch(function (error) {
+							console.log(error);
+						});
+
+					$(() => {
+					{
+						let progressbar = $('#progressbar');
+						let max = progressbar.attr('max');
+						let time = (1000 / max) * 5;
+						let value = progressbar.val();
+
+						const loading = () => {
+
+							if(this.ams_service == true && this.uploadStatus == 1){
+								value = 50;
+							}
+
+							if(this.uploadStatus == 1){
+								value = 100
+							}
+
+
+							progressbar.val(value);
+
+							$('.progress-value').html(value + '%');
+
+							if (value == max) {
+								clearInterval(animate);
+								this.redirect()
+							}
+						};
+
+						const animate = setInterval(() => loading(), time);
+					};
+				});
+				})
+
+
+			function isEmpty(obj) {
+						for(var key in obj) {
+							if(obj.hasOwnProperty(key))
+								return false;
+						}
+						return true;
+					}
+
+
+			uploadToServer = (url) => {
+				let flg = false
+				axios
+						.get(
+							this.url
+						)
+						.then((response) => {
+							console.log(response.data);
+
+							if(response.data == 1){
+								flg = true
+							}
+
+						})
+						.catch(function (error) {
+							console.log(error);
+						});
+
+						console.log('flg = '+flg)
+						return flg
+			}
+
+
+			redirect = () => {
+				let usr_data = JSON.parse(localStorage.getItem('usr_data'))
+
+			console.log(usr_data)
+
+
+			if(isEmpty(usr_data)){
+				window.location = __dirname+"/signup.html"
+			}else if(!isEmpty(usr_data)){
+				window.location = __dirname+"/signin.html"
+			}
+
+			}
+
+			</script>
+</body>
+
+</html>
